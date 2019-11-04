@@ -25,13 +25,13 @@ def write_delay():
 
 def score_check(home_away_score):
 	global score, game, refresh, delay, led
-	if game[home_away_score] > score:
+	if int(game[home_away_score]) > score:
 		time.sleep(delay)
 		GPIO.setup(led, GPIO.OUT)
 		GPIO.output(led, 1)
 		GPIO.output(led, 0)
 		GPIO.cleanup()
-		score = game[home_away_score]
+		score = int(game[home_away_score])
 		refresh = normal_refresh - delay
 	else:
 		score = game[home_away_score]
