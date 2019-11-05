@@ -4,7 +4,7 @@ import time
 
 def read_team():
 	global team_name
-	team_name = str(open('team.txt', 'r').read())
+	team_name = open('team.txt', 'r').read()[:-1]
 
 def write_team():
 	global team_name
@@ -44,7 +44,6 @@ except:
 normal_refresh = 5
 score_url = 'http://live.nhle.com/GameData/RegularSeasonScoreboardv3.jsonp?'
 score = 0
-
 scoreboard = json.loads(urlopen(score_url).read().decode('utf-8').replace("loadScoreboard(","").replace(")",""))['games']
 for game in scoreboard:
 	if game['atv'] == team_name and game['bs'] == 'LIVE':
@@ -56,8 +55,9 @@ while 1:
 	refresh = normal_refresh
 	scoreboard = json.loads(urlopen(score_url).read().decode('utf-8').replace("loadScoreboard(","").replace(")",""))['games']
 	for game in scoreboard:
-		if game['atv'] == team_name and game['bs'] == 'LIVE':
+		print (team_name + "heri")
+		if game['atv'] == team_name:# and game['bs'] == 'LIVE':
 			score_check('ats')
-		if game['htv'] == team_name and game['bs'] == 'LIVE':
+		if game['htv'] == team_name:# and game['bs'] == 'LIVE':
 			score_check('hts')
 	time.sleep(refresh)

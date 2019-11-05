@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 
 def read_team():
 	global team_name
-	team_name = str(open('team.txt', 'r').read())
+	team_name = open('team.txt', 'r').read()[:-1]
 
 def write_team():
 	global team_name
