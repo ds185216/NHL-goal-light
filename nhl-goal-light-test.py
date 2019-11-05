@@ -24,16 +24,14 @@ def write_delay():
 
 def score_check(home_away_score):
 	global score, game, refresh, delay
-	try:
+	if game[home_away_score] != "":
 		if int(game[home_away_score]) > score:
 			time.sleep(delay)
 			print ('goal')
 			score = int(game[home_away_score])
 			refresh = normal_refresh - delay
 		else:
-			score = game[home_away_score]
-	except:
-		pass
+			score = int(game[home_away_score])
 try:
 	read_delay()
 except:
@@ -46,6 +44,13 @@ except:
 normal_refresh = 5
 score_url = 'http://live.nhle.com/GameData/RegularSeasonScoreboardv3.jsonp?'
 score = 0
+
+scoreboard = json.loads(urlopen(score_url).read().decode('utf-8').replace("loadScoreboard(","").replace(")",""))['games']
+for game in scoreboard:
+	if game['atv'] == team_name and game['bs'] == 'LIVE':
+		score = int(game['ats'])
+	if game['htv'] == team_name and game['bs'] == 'LIVE':
+		score = int(game['hts'])
 
 while 1:
 	refresh = normal_refresh

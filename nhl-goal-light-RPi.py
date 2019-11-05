@@ -25,7 +25,7 @@ def write_delay():
 
 def score_check(home_away_score):
 	global score, game, refresh, delay, led
-	try:
+	if game[home_away_score] != "":
 		if int(game[home_away_score]) > score:
 			time.sleep(delay)
 			GPIO.setup(led, GPIO.OUT)
@@ -35,9 +35,8 @@ def score_check(home_away_score):
 			score = int(game[home_away_score])
 			refresh = normal_refresh - delay
 		else:
-			score = game[home_away_score]
-	except:
-		pass
+			score = int(game[home_away_score])
+
 try:
 	read_delay()
 except:
@@ -54,6 +53,13 @@ score = 0
 #pinout
 led = 23
 GPIO.setmode(GPIO.BOARD)
+
+scoreboard = json.loads(urlopen(score_url).read().decode('utf-8').replace("loadScoreboard(","").replace(")",""))['games']
+for game in scoreboard:
+	if game['atv'] == team_name and game['bs'] == 'LIVE':
+		score = int(game['ats'])
+	if game['htv'] == team_name and game['bs'] == 'LIVE':
+		score = int(game['hts'])
 
 while 1:
 	refresh = normal_refresh
