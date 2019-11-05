@@ -24,14 +24,16 @@ def write_delay():
 
 def score_check(home_away_score):
 	global score, game, refresh, delay
-	if int(game[home_away_score]) > score:
-		time.sleep(delay)
-		print ('goal')
-		score = int(game[home_away_score])
-		refresh = normal_refresh - delay
-	else:
-		score = game[home_away_score]
-
+	try:
+		if int(game[home_away_score]) > score:
+			time.sleep(delay)
+			print ('goal')
+			score = int(game[home_away_score])
+			refresh = normal_refresh - delay
+		else:
+			score = game[home_away_score]
+	except:
+		pass
 try:
 	read_delay()
 except:
