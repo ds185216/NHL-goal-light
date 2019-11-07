@@ -55,9 +55,8 @@ while 1:
 	refresh = normal_refresh
 	scoreboard = json.loads(urlopen(score_url).read().decode('utf-8').replace("loadScoreboard(","").replace(")",""))['games']
 	for game in scoreboard:
-		print (team_name + "heri")
-		if game['atv'] == team_name:# and game['bs'] == 'LIVE':
+		if game['atv'] == team_name and game['bs'] == 'LIVE':
 			score_check('ats')
-		if game['htv'] == team_name:# and game['bs'] == 'LIVE':
+		if game['htv'] == team_name and game['bs'] == 'LIVE':
 			score_check('hts')
 	time.sleep(refresh)
